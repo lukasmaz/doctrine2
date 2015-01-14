@@ -828,7 +828,8 @@ public function __construct(<params>)
                 $lastSeenNamespace = "";
                 $inNamespace = true;
             } elseif ($token[0] == T_CLASS) {
-                $inClass = true;
+                $inScopeOperator = isset($tokens[$i - 1][1]) && $tokens[$i - 1][1] == '::';
+                $inClass = !$inScopeOperator;
             } elseif ($token[0] == T_FUNCTION) {
                 if ($tokens[$i+2][0] == T_STRING) {
                     $this->staticReflection[$lastSeenClass]['methods'][] = strtolower($tokens[$i+2][1]);
